@@ -6,7 +6,6 @@
   "type": "commonjs",
   "scripts": {
     "start": "node ./dist/app.js",
-    "build": "npm i",
     "dev": "nodemon dist/app.js"
   },
   "author": "Sandeep Lakhiwal",

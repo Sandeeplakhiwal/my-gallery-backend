@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,11 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import mongoose from "mongoose";
-import Validator from "validator";
-import { hash, compare } from "bcrypt-ts";
-import jwt from "jsonwebtoken";
-const userSchema = new mongoose.Schema({
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
+const validator_1 = __importDefault(require("validator"));
+const bcryptjs_1 = require("bcryptjs");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: [true, "Please enter your name"],
@@ -22,7 +28,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter your email"],
         unique: true,
-        validate: [Validator.isEmail, "Please enter a valid email"],
+        validate: [validator_1.default.isEmail, "Please enter a valid email"],
     },
     password: {
         type: String,
@@ -43,7 +49,7 @@ const userSchema = new mongoose.Schema({
     },
     posts: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose_1.default.Schema.Types.ObjectId,
             ref: "Post",
         },
     ],
@@ -54,14 +60,14 @@ userSchema.pre("save", function (next) {
         if (!this.isModified("password")) {
             return next();
         }
-        this.password = yield hash(this.password, 10);
+        this.password = yield (0, bcryptjs_1.hash)(this.password, 10);
         next();
     });
 });
 // Generate JWT token
 userSchema.methods.generateToken = function () {
     return __awaiter(this, void 0, void 0, function* () {
-        return jwt.sign({ _id: this._id }, `${process.env.JWT_SECRET}`, {
+        return jsonwebtoken_1.default.sign({ _id: this._id }, `${process.env.JWT_SECRET}`, {
             expiresIn: process.env.JWT_EXPIRE,
         });
     });
@@ -69,7 +75,7 @@ userSchema.methods.generateToken = function () {
 // Comparing user password
 userSchema.methods.comparePassword = function (password) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield compare(password, this.password);
+        return yield (0, bcryptjs_1.compare)(password, this.password);
     });
 };
-export const User = mongoose.model("User", userSchema);
+exports.User = mongoose_1.default.model("User", userSchema);

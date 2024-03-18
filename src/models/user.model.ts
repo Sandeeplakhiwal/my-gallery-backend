@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 import Validator from "validator";
-import { hash, compare } from "bcrypt-ts";
+import { hash, compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { IPost } from "./post.model";
 

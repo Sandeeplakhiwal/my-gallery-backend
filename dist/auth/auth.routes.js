@@ -1,9 +1,14 @@
-import express from "express";
-import { Login, Logout, Signup, getUserProfile } from "./auth.controller.js";
-import { isAuthenticated } from "../middleware/auth.middleware.js";
-const Router = express.Router();
-Router.post("/auth/register", Signup);
-Router.post("/auth/login", Login);
-Router.get("/auth/logout", Logout);
-Router.get("/me", isAuthenticated, getUserProfile);
-export default Router;
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_controller_1 = require("./auth.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const Router = express_1.default.Router();
+Router.post("/auth/register", auth_controller_1.Signup);
+Router.post("/auth/login", auth_controller_1.Login);
+Router.get("/auth/logout", auth_controller_1.Logout);
+Router.get("/me", auth_middleware_1.isAuthenticated, auth_controller_1.getUserProfile);
+exports.default = Router;

@@ -36,6 +36,7 @@ import { User } from "../models/user.model.js";
 import { Post } from "../models/post.model.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.js";
+console.log("Okay");
 export const createPost = (req, res, next) =>
   __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;

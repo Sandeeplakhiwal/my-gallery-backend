@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express, { Application, Request, Response } from "express";
-import { connectDB } from "./config/db.js";
+import { connectDB } from "./config/db";
 import cookieParser from "cookie-parser";
 import Cors from "cors";
 import cloudinary from "cloudinary";
@@ -45,9 +45,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Importing routes
-import AuthRoutes from "./auth/auth.routes.js";
-import ErrorMiddleware from "./middleware/error.js";
-import PostRoutes from "./post/post.routes.js";
+import AuthRoutes from "./auth/auth.routes";
+import ErrorMiddleware from "./middleware/error";
+import PostRoutes from "./post/post.routes";
 
 // Using routes
 app.use("/api/v1", AuthRoutes);
